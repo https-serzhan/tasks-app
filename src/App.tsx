@@ -7,11 +7,11 @@ const MainHeader = lazy(() => import("./components/main-header.tsx"));
 function App() {
 
 	return (
-			<div className="min-h-screen bg-slate-100">
+			<div className="app-shell">
 				<Suspense fallback={<h1>Loading...</h1>}>
 					<MainHeader/>
 				</Suspense>
-				<main className="pb-10">
+				<main className="app-main">
 					<AppRouter/>
 				</main>
 			</div>

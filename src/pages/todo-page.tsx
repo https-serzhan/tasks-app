@@ -91,87 +91,85 @@ const TodoPage = () => {
 	});
 
 	return (
-			<div className="mx-auto flex w-full max-w-6xl flex-col gap-5 px-4 py-6 sm:px-6 lg:px-8">
-				<section className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_320px]">
-					<Card className="rounded-2xl border-slate-200 bg-white shadow-[0_18px_36px_-28px_rgba(15,23,42,0.22)]">
-						<CardContent className="p-6 sm:p-7">
-							<div className="flex flex-col gap-6">
-								<div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+			<div className="page-shell">
+				<section className="todo-layout">
+					<Card className="panel">
+						<CardContent className="panel__content">
+							<div className="todo-summary">
+								<div className="todo-summary__top">
 									<div>
-										<div className="mb-3 inline-flex items-center rounded-md border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-medium uppercase tracking-[0.16em] text-slate-500">
-											Task board
-										</div>
-										<h1 className="text-3xl font-semibold tracking-tight text-slate-950">Todo list</h1>
-										<p className="mt-2 max-w-2xl text-sm leading-6 text-slate-600">
+										<div className="panel__eyebrow">Task board</div>
+										<h1 className="panel__title">Todo list</h1>
+										<p className="panel__description">
 											Компактный рабочий экран для создания, редактирования и завершения задач.
 										</p>
 									</div>
 
-									<div className="grid gap-3 sm:grid-cols-3">
-										<div className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3">
-											<div className="flex items-center justify-between">
-												<span className="text-xs font-medium uppercase tracking-[0.14em] text-slate-400">Всего</span>
-												<ListTodo className="size-4 text-slate-500"/>
+									<div className="stat-grid">
+										<div className="stat-card">
+											<div className="stat-card__row">
+												<span className="stat-card__label">Всего</span>
+												<ListTodo className="app-brand__icon"/>
 											</div>
-											<p className="mt-3 text-3xl font-semibold text-slate-950">{todos.length}</p>
+											<p className="stat-card__value">{todos.length}</p>
 										</div>
-										<div className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3">
-											<div className="flex items-center justify-between">
-												<span className="text-xs font-medium uppercase tracking-[0.14em] text-amber-700/70">В работе</span>
-												<CircleDashed className="size-4 text-amber-600"/>
+										<div className="stat-card stat-card--warning">
+											<div className="stat-card__row">
+												<span className="stat-card__label">В работе</span>
+												<CircleDashed className="app-brand__icon"/>
 											</div>
-											<p className="mt-3 text-3xl font-semibold text-amber-700">{pendingCount}</p>
+											<p className="stat-card__value">{pendingCount}</p>
 										</div>
-										<div className="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3">
-											<div className="flex items-center justify-between">
-												<span className="text-xs font-medium uppercase tracking-[0.14em] text-emerald-700/70">Готово</span>
-												<CheckCheck className="size-4 text-emerald-600"/>
+										<div className="stat-card stat-card--success">
+											<div className="stat-card__row">
+												<span className="stat-card__label">Готово</span>
+												<CheckCheck className="app-brand__icon"/>
 											</div>
-											<p className="mt-3 text-3xl font-semibold text-emerald-700">{completedCount}</p>
+											<p className="stat-card__value">{completedCount}</p>
 										</div>
 									</div>
 								</div>
 
-								<div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+								<div className="todo-create-wrap">
 									<CreateTodo onCreateTodo={handleCreateTodo}/>
 								</div>
 							</div>
 						</CardContent>
 					</Card>
 
-					<Card className="rounded-2xl border-slate-200 bg-slate-900 text-white shadow-[0_18px_36px_-28px_rgba(15,23,42,0.35)]">
-						<CardContent className="p-6">
-							<p className="text-sm font-medium text-slate-300">Navigation</p>
-							<div className="mt-6 space-y-4">
+					<Card className="panel panel--dark">
+						<CardContent className="sidebar-panel__content">
+							<p className="sidebar-panel__label">Navigation</p>
+							<div className="sidebar-metric">
 								<div>
-									<p className="text-4xl font-semibold text-white">{page}</p>
-									<p className="mt-1 text-sm text-slate-300">Текущая страница</p>
+									<p className="sidebar-metric__value">{page}</p>
+									<p className="sidebar-metric__text">Текущая страница</p>
 								</div>
-								<div className="h-px bg-white/10"/>
+								<div className="sidebar-divider"/>
 								<div>
-									<p className="text-4xl font-semibold text-white">{totalPages}</p>
-									<p className="mt-1 text-sm text-slate-300">Всего страниц</p>
+									<p className="sidebar-metric__value">{totalPages}</p>
+									<p className="sidebar-metric__text">Всего страниц</p>
 								</div>
-								<div className="h-px bg-white/10"/>
+								<div className="sidebar-divider"/>
 								<div>
-									<p className="text-4xl font-semibold text-white">{limit}</p>
-									<p className="mt-1 text-sm text-slate-300">Задач на страницу</p>
+									<p className="sidebar-metric__value">{limit}</p>
+									<p className="sidebar-metric__text">Задач на страницу</p>
 								</div>
 							</div>
 						</CardContent>
 					</Card>
 				</section>
 
-				<Card className="rounded-2xl border-slate-200 bg-white shadow-[0_18px_36px_-28px_rgba(15,23,42,0.22)]">
-					<CardHeader className="flex flex-col gap-4 border-b border-slate-200 pb-4 sm:flex-row sm:items-center sm:justify-between">
+				<Card className="panel">
+					<CardHeader className="list-panel__header">
 						<div>
-							<CardTitle className="text-xl">Список задач</CardTitle>
-							<p className="mt-1 text-sm text-slate-500">Страница {page} из {totalPages}</p>
+							<CardTitle className="list-panel__title">Список задач</CardTitle>
+							<p className="list-panel__text">Страница {page} из {totalPages}</p>
 						</div>
-						<div className="flex items-center gap-3">
-							<span className="text-sm text-slate-500">Показывать</span>
+						<div className="list-panel__controls">
+							<span className="list-panel__text">Показывать</span>
 							<Select value={String(limit)} onValueChange={(value) => handleLimitChange(Number(value))}>
-								<SelectTrigger className="h-10 w-24 rounded-lg border-slate-200 bg-white shadow-none">
+								<SelectTrigger className="list-panel__select">
 									<SelectValue placeholder="Лимит"/>
 								</SelectTrigger>
 								<SelectContent>
@@ -183,10 +181,10 @@ const TodoPage = () => {
 						</div>
 					</CardHeader>
 
-					<CardContent className="space-y-3 p-4 sm:p-6">
+					<CardContent className="list-panel__content">
 						{isPendingTodos ? (
 								[...Array(limit)].map((_, i) => (
-										<Skeleton key={i} className="h-20 rounded-xl bg-slate-200/70"/>
+										<Skeleton key={i} className="loading-card"/>
 								))
 						) : (
 								todos.map((todo) => (
@@ -200,13 +198,13 @@ const TodoPage = () => {
 								))
 						)}
 
-						<Pagination className="justify-between border-t border-slate-200 pt-4">
+						<Pagination className="list-panel__pagination">
 							<PaginationContent>
 								<PaginationItem>
 									<PaginationPrevious
 											href="#"
 											text="Назад"
-											className={page === 1 ? "pointer-events-none opacity-40" : ""}
+											className={page === 1 ? "is-disabled" : ""}
 											onClick={(e) => {
 												e.preventDefault();
 												if (page > 1) handlePageChange(page - 1);
@@ -220,7 +218,7 @@ const TodoPage = () => {
 									const showEllipsis = previousPage && pageNumber - previousPage > 1;
 
 									return (
-											<div key={pageNumber} className="flex items-center">
+											<div key={pageNumber} className="pagination-page-wrap">
 												{showEllipsis && (
 														<PaginationItem>
 															<PaginationEllipsis/>
@@ -247,7 +245,7 @@ const TodoPage = () => {
 									<PaginationNext
 											href="#"
 											text="Дальше"
-											className={page >= totalPages ? "pointer-events-none opacity-40" : ""}
+											className={page >= totalPages ? "is-disabled" : ""}
 											onClick={(e) => {
 												e.preventDefault();
 												if (page < totalPages) handlePageChange(page + 1);

@@ -23,27 +23,27 @@ const CreateTodo = ({onCreateTodo}: CreateTodoProps) => {
 	}
 
 	return (
-			<div className="space-y-3">
-				<form className="flex flex-col gap-3 lg:flex-row" onSubmit={handleSubmit}>
+			<div className="todo-create">
+				<form className="todo-create__form" onSubmit={handleSubmit}>
 					<Input
 							disabled={isPending}
 							placeholder="Что нужно сделать?"
 							value={title}
 							onChange={(e) => setTitle(e.target.value)}
-							className="h-11 rounded-lg border-slate-200 bg-white shadow-none"
+							className="todo-create__input"
 					/>
 					<Button
 							type='submit'
 							disabled={isPending || !title.trim()}
-							className="h-11 min-w-36 rounded-lg bg-slate-900 text-white hover:bg-slate-800"
+							className="todo-create__submit"
 					>
-						<Plus className="mr-2 size-4"/>
+						<Plus className="todo-create__submit-icon"/>
 						{isPending ? "Добавление..." : "Добавить"}
 					</Button>
 				</form>
 
 				{isPending && (
-						<Skeleton className="h-14 rounded-lg bg-slate-200/70"/>
+						<Skeleton className="todo-create__skeleton"/>
 				)}
 			</div>
 	);

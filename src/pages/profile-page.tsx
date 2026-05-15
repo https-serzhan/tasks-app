@@ -74,81 +74,82 @@ const ProfilePage = () => {
 	const avatarFallback = user?.name ? user.name.split(' ').slice(0, 2).map((name) => name[0]).join('') : "U";
 
 	return (
-			<div className="mx-auto flex w-full max-w-6xl flex-col gap-5 px-4 py-6 sm:px-6 lg:px-8">
-				<section className="grid gap-4 lg:grid-cols-[320px_minmax(0,1fr)]">
-					<Card className="rounded-2xl border-slate-200 bg-slate-900 text-white shadow-[0_20px_40px_-28px_rgba(15,23,42,0.55)]">
-						<CardContent className="p-6">
-							<div className="flex items-center gap-4">
-								<Avatar className="size-18 rounded-xl border border-white/10">
+			<div className="page-shell">
+				<section className="profile-layout">
+					<Card className="panel panel--dark">
+						<CardContent className="sidebar-panel__content">
+							<div className="profile-hero">
+								<Avatar className="profile-hero__avatar">
 									<AvatarImage src={file ? URL.createObjectURL(file) : form.avatar}/>
 									<AvatarFallback>{avatarFallback}</AvatarFallback>
 								</Avatar>
 								<div>
-									<p className="text-xl font-semibold text-white">{form.name}</p>
-									<p className="mt-1 text-sm text-slate-300">{user?.email}</p>
+									<p className="profile-hero__name">{form.name}</p>
+									<p className="profile-hero__email">{user?.email}</p>
 								</div>
 							</div>
-							<div className="mt-8 space-y-4">
+							<div className="profile-metrics">
 								<div>
-									<p className="text-4xl font-semibold text-white">{files.length || 1}</p>
-									<p className="mt-1 text-sm text-slate-300">Загруженных изображений</p>
+									<p className="profile-metric__value">{files.length || 1}</p>
+									<p className="profile-metric__text">Загруженных изображений</p>
 								</div>
-								<div className="h-px bg-white/10"/>
+								<div className="sidebar-divider"/>
 								<div>
-									<p className="text-4xl font-semibold text-white">{file ? (fileSize < 1 ? "<1" : fileSize) : 0}</p>
-									<p className="mt-1 text-sm text-slate-300">Размер текущего файла, мб</p>
+									<p className="profile-metric__value">{file ? (fileSize < 1 ? "<1" : fileSize) : 0}</p>
+									<p className="profile-metric__text">Размер текущего файла, мб</p>
 								</div>
 							</div>
 						</CardContent>
 					</Card>
 
-					<Card className="rounded-2xl border-slate-200 bg-white shadow-[0_18px_36px_-28px_rgba(15,23,42,0.22)]">
-						<CardHeader className="border-b border-slate-200 pb-5">
-							<CardTitle className="text-2xl">Профиль</CardTitle>
+					<Card className="panel">
+						<CardHeader className="panel__header">
+							<CardTitle className="panel__title panel__title--sm">Профиль</CardTitle>
 							<CardDescription>Редактирование имени, ссылки на аватар и локальная загрузка изображения.</CardDescription>
 						</CardHeader>
-						<CardContent className="grid gap-6 p-6 xl:grid-cols-[minmax(0,1fr)_360px]">
-							<div className="space-y-4">
-								<div className="grid gap-4 sm:grid-cols-2">
-									<div className="space-y-2">
-										<label className="text-sm font-medium text-slate-700">Имя</label>
-										<div className="relative">
-											<UserRound className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-slate-400"/>
+						<CardContent className="panel__content">
+							<div className="editor-grid">
+								<div className="form-stack">
+									<div className="two-fields">
+										<div className="form-group">
+											<label className="form-label">Имя</label>
+											<div className="field-with-icon">
+												<UserRound className="field-with-icon__icon"/>
 											<Input
 													placeholder='Имя'
 													onChange={e => handleSetFormValue('name', e.target.value)}
 													value={form.name}
-													className="h-11 rounded-lg border-slate-200 pl-10"
+													className="form-input form-input--with-icon"
 											/>
 										</div>
 									</div>
-									<div className="space-y-2">
-										<label className="text-sm font-medium text-slate-700">Email</label>
-										<div className="relative">
-											<Mail className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-slate-400"/>
+									<div className="form-group">
+										<label className="form-label">Email</label>
+										<div className="field-with-icon">
+											<Mail className="field-with-icon__icon"/>
 											<Input
 													placeholder='Email'
 													readOnly
 													value={user?.email}
-													className="h-11 rounded-lg border-slate-200 pl-10"
+													className="form-input form-input--with-icon"
 											/>
 										</div>
 									</div>
 								</div>
 
-								<div className="space-y-2">
-									<label className="text-sm font-medium text-slate-700">Ссылка на аватар</label>
+								<div className="form-group">
+									<label className="form-label">Ссылка на аватар</label>
 									<Input
 											placeholder='Фото'
 											value={form.avatar}
 											onChange={e => handleSetFormValue('avatar', e.target.value)}
-											className="h-11 rounded-lg border-slate-200"
+											className="form-input"
 									/>
 								</div>
 
-								<div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+								<div className="upload-panel">
 									<div
-											className={`flex min-h-56 cursor-pointer flex-col items-center justify-center rounded-xl border border-dashed p-6 text-center transition ${isDragging ? "border-slate-900 bg-white" : "border-slate-300 bg-white"}`}
+											className={isDragging ? "dropzone dropzone--dragging" : "dropzone"}
 											onClick={() => inputRef.current?.click()}
 											onDrop={onDrop}
 											onDragOver={onDragOver}
@@ -156,19 +157,19 @@ const ProfilePage = () => {
 									>
 										{!file && (
 												<>
-													<div className="mb-4 flex size-12 items-center justify-center rounded-xl border border-slate-200 bg-slate-50">
-														<ImagePlus className="size-5 text-slate-700"/>
+													<div className="icon-box">
+														<ImagePlus className="app-brand__icon"/>
 													</div>
-													<p className="font-medium text-slate-900">
+													<p className="dropzone__title">
 														{isDragging ? 'Отпустите файл для загрузки' : 'Нажмите или перетащите изображение'}
 													</p>
-													<p className="mt-2 text-sm text-slate-500">Подходит для локального превью профиля</p>
+													<p className="dropzone__text">Подходит для локального превью профиля</p>
 												</>
 										)}
 										{file && (
-												<div className="space-y-4">
-													<img src={URL.createObjectURL(file)} alt="" className="max-h-48 rounded-xl object-cover shadow-sm"/>
-													<div className="text-sm text-slate-600">
+												<div>
+													<img src={URL.createObjectURL(file)} alt="" className="dropzone__preview"/>
+													<div className="dropzone__filemeta">
 														<div>Название файла: {file.name}</div>
 														<div>Размер файла: {fileSize < 1 ? `${fileSize.toString().replace('0.', '')} кб` : `${fileSize} мб`}</div>
 													</div>
@@ -176,14 +177,14 @@ const ProfilePage = () => {
 										)}
 									</div>
 
-									<div className="mt-4 flex flex-wrap gap-3">
-										<Button variant="outline" className="rounded-lg" onClick={() => inputRef.current?.click()}>
-											<Camera className="mr-2 size-4"/>
+									<div className="upload-actions">
+										<Button variant="outline" className="app-button-secondary" onClick={() => inputRef.current?.click()}>
+											<Camera className="inline-icon-left"/>
 											Загрузить файл
 										</Button>
 										{file && (
-												<Button variant="outline" className="rounded-lg border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700" onClick={() => setFile(null)}>
-													<Trash2 className="mr-2 size-4"/>
+												<Button variant="outline" className="app-button-secondary app-button-icon-danger" onClick={() => setFile(null)}>
+													<Trash2 className="inline-icon-left"/>
 													Удалить файл
 												</Button>
 										)}
@@ -191,26 +192,25 @@ const ProfilePage = () => {
 								</div>
 							</div>
 
-							<div className="space-y-4">
-								<div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
-									<p className="text-sm font-medium text-slate-700">Галерея файлов</p>
+							<div className="form-stack">
+								<div className="gallery-panel">
+									<p className="gallery-panel__title">Галерея файлов</p>
 									{files.length ? (
-											<div className="mt-4 grid gap-3">
+											<div className="gallery-grid">
 												{files.map((previewFile, index) => (
 														<img
 																key={index}
 																src={URL.createObjectURL(previewFile)}
 																alt=""
-																className="w-full rounded-xl object-cover shadow-sm"
 																onClick={() => setFiles(prev => prev.filter(f => f !== previewFile))}
 														/>
 												))}
 											</div>
 									) : (
-											<p className="mt-3 text-sm text-slate-500">Файлы появятся здесь после загрузки.</p>
+											<p className="gallery-empty">Файлы появятся здесь после загрузки.</p>
 									)}
 									{!!files.length && (
-											<Button variant="outline" className="mt-4 rounded-lg border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700" onClick={() => setFiles([])}>
+											<Button variant="outline" className="app-button-secondary app-button-icon-danger" onClick={() => setFiles([])}>
 												Очистить список файлов
 											</Button>
 									)}
@@ -219,13 +219,14 @@ const ProfilePage = () => {
 								<input multiple accept='image/*' ref={inputRef} type='file' onChange={handleChangeFile} hidden/>
 								<Button
 										disabled={!isModified || isEmpty}
-										className="h-11 w-full rounded-lg bg-slate-900 text-white hover:bg-slate-800"
+										className="app-button-primary app-button-block"
 										onClick={handleSubmit}
 								>
-									<Save className="mr-2 size-4"/>
+									<Save className="inline-icon-left"/>
 									Сохранить изменения
 								</Button>
 							</div>
+						</div>
 						</CardContent>
 					</Card>
 				</section>

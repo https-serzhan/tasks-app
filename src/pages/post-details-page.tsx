@@ -29,43 +29,43 @@ const PostDetailsPage = () => {
 	const isPendingPost = loadedPostId !== postId;
 
 	return (
-			<div className="mx-auto flex w-full max-w-6xl flex-col gap-5 px-4 py-6 sm:px-6 lg:px-8">
+			<div className="page-shell">
 				{isPendingPost ? (
-						<div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_320px]">
-							<Skeleton className="h-[380px] rounded-2xl bg-slate-200/70"/>
-							<Skeleton className="h-[380px] rounded-2xl bg-slate-200/70"/>
+						<div className="details-layout">
+							<Skeleton className="loading-card loading-card--tall"/>
+							<Skeleton className="loading-card loading-card--tall"/>
 						</div>
 				) : (
-						<section className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_320px]">
-							<Card className="rounded-2xl border-slate-200 bg-white shadow-[0_18px_36px_-28px_rgba(15,23,42,0.22)]">
-								<CardHeader className="border-b border-slate-200 pb-5">
-									<div className="flex items-center gap-3">
-										<div className="flex size-11 items-center justify-center rounded-lg border border-slate-200 bg-slate-50">
-											<Newspaper className="size-5 text-slate-600"/>
+						<section className="details-layout">
+							<Card className="panel">
+								<CardHeader className="panel__header">
+									<div className="post-card__header">
+										<div className="icon-box">
+											<Newspaper className="app-brand__icon"/>
 										</div>
 										<div>
-											<p className="text-xs font-medium uppercase tracking-[0.14em] text-slate-400">Post #{postId}</p>
-											<CardTitle className="mt-1 text-3xl leading-tight">{post?.title}</CardTitle>
+											<p className="post-card__id">Post #{postId}</p>
+											<CardTitle className="panel__title panel__title--sm">{post?.title}</CardTitle>
 										</div>
 									</div>
 								</CardHeader>
-								<CardContent className="p-6">
-									<p className="max-w-3xl text-base leading-8 text-slate-600">{post?.body}</p>
+								<CardContent className="panel__content">
+									<p className="panel__description">{post?.body}</p>
 								</CardContent>
 							</Card>
 
-							<Card className="rounded-2xl border-slate-200 bg-slate-900 text-white shadow-[0_20px_40px_-28px_rgba(15,23,42,0.55)]">
-								<CardContent className="p-6">
-									<p className="text-sm font-medium text-slate-300">Comments</p>
-									<div className="mt-6">
-										<p className="text-5xl font-semibold text-white">{comments.length}</p>
-										<p className="mt-2 text-sm text-slate-300">Комментариев к посту</p>
+							<Card className="panel panel--dark">
+								<CardContent className="sidebar-panel__content">
+									<p className="sidebar-panel__label">Comments</p>
+									<div className="sidebar-metric">
+										<p className="sidebar-metric__value">{comments.length}</p>
+										<p className="sidebar-metric__text">Комментариев к посту</p>
 									</div>
-									<div className="mt-8 space-y-3">
+									<div className="details-sidebar__links">
 										{[1, 2, 3].map((id) => (
-											<Link key={id} to={`/posts/${id}`} className="flex items-center justify-between rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-slate-200 transition hover:bg-white/10">
+											<Link key={id} to={`/posts/${id}`} className="details-sidebar__link">
 												<span>Post #{id}</span>
-												<ArrowRight className="size-4"/>
+												<ArrowRight className="app-brand__icon"/>
 											</Link>
 										))}
 									</div>
@@ -74,23 +74,23 @@ const PostDetailsPage = () => {
 						</section>
 				)}
 
-				<Card className="rounded-2xl border-slate-200 bg-white shadow-[0_18px_36px_-28px_rgba(15,23,42,0.22)]">
-					<CardHeader className="border-b border-slate-200 pb-4">
-						<div className="flex items-center gap-3">
-							<div className="flex size-10 items-center justify-center rounded-lg border border-slate-200 bg-slate-50">
-								<MessageSquareText className="size-4 text-slate-600"/>
+				<Card className="panel">
+					<CardHeader className="panel__header">
+						<div className="post-card__header">
+							<div className="icon-box">
+								<MessageSquareText className="app-brand__icon"/>
 							</div>
-							<CardTitle className="text-xl">Комментарии</CardTitle>
+							<CardTitle className="list-panel__title">Комментарии</CardTitle>
 						</div>
 					</CardHeader>
-					<CardContent className="space-y-3 p-4 sm:p-6">
+					<CardContent className="comment-list">
 						{comments.map((comment) => (
-								<div key={comment.id} className="rounded-xl border border-slate-200 bg-slate-50 p-5">
-									<div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
-										<h4 className="font-semibold text-slate-950">{comment.name}</h4>
-										<p className="text-sm text-slate-500">{comment.email}</p>
+								<div key={comment.id} className="comment-card">
+									<div className="comment-card__header">
+										<h4 className="comment-card__title">{comment.name}</h4>
+										<p className="comment-card__email">{comment.email}</p>
 									</div>
-									<p className="mt-3 text-sm leading-7 text-slate-600">{comment.body}</p>
+									<p className="comment-card__text">{comment.body}</p>
 								</div>
 						))}
 					</CardContent>

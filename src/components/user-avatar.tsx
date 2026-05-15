@@ -26,8 +26,8 @@ const UserAvatar = () => {
 				<Tooltip>
 					<TooltipTrigger asChild>
 						<DropdownMenuTrigger asChild>
-							<Button variant="ghost" className="size-10 rounded-lg border border-slate-200 bg-white p-0 shadow-sm hover:bg-slate-50">
-								<Avatar className="size-8 rounded-md">
+							<Button variant="ghost" className="user-menu-trigger">
+								<Avatar className="user-menu-avatar">
 									<AvatarImage src={user.avatar}/>
 									<AvatarFallback>{fallback}</AvatarFallback>
 								</Avatar>
@@ -36,14 +36,14 @@ const UserAvatar = () => {
 					</TooltipTrigger>
 					<TooltipContent>{user.name}</TooltipContent>
 				</Tooltip>
-				<DropdownMenuContent align="end" className="w-60">
-					<DropdownMenuLabel className="space-y-1 py-3">
-						<p className="font-medium text-slate-950">{user.name}</p>
-						<p className="text-xs text-slate-500">{user.email}</p>
+				<DropdownMenuContent align="end" className="user-menu-content">
+					<DropdownMenuLabel className="user-menu-label">
+						<p className="user-menu-name">{user.name}</p>
+						<p className="user-menu-email">{user.email}</p>
 					</DropdownMenuLabel>
 					<DropdownMenuSeparator/>
 					<DropdownMenuItem onClick={() => navigate('/profile')}>
-						<Avatar className="mr-2 size-6">
+						<Avatar className="user-menu-inline-avatar">
 							<AvatarImage src={user.avatar}/>
 							<AvatarFallback>{fallback}</AvatarFallback>
 						</Avatar>
@@ -51,7 +51,7 @@ const UserAvatar = () => {
 					</DropdownMenuItem>
 					{user.role === 'admin' && (
 							<DropdownMenuItem onClick={() => navigate('/admin/dashboard')}>
-								<Settings className="mr-2 size-4"/>
+								<Settings className="user-menu-item-icon"/>
 								Админ
 							</DropdownMenuItem>
 					)}
@@ -59,7 +59,7 @@ const UserAvatar = () => {
 					<DropdownMenuItem onClick={() => {
 						sign_out();
 					}}>
-						<LogOut className="mr-2 size-4"/>
+						<LogOut className="user-menu-item-icon"/>
 						Выход
 					</DropdownMenuItem>
 				</DropdownMenuContent>
