@@ -26,8 +26,8 @@ const UserAvatar = () => {
 				<Tooltip>
 					<TooltipTrigger asChild>
 						<DropdownMenuTrigger asChild>
-							<Button variant="ghost" className="size-11 rounded-full p-0">
-								<Avatar className="size-10 ring-2 ring-white shadow-sm">
+							<Button variant="ghost" className="size-10 rounded-lg p-0 hover:bg-slate-100">
+								<Avatar className="size-8 rounded-lg shadow-sm">
 									<AvatarImage src={user.avatar}/>
 									<AvatarFallback>{fallback}</AvatarFallback>
 								</Avatar>

@@ -57,9 +57,9 @@ const TodoCard = ({todo, toggleTodo, updateTodoTitle, handleDeleteTodo}: TodoCar
 	}
 
 	return (
-			<Card className="overflow-hidden border-white/70 bg-white/85 shadow-[0_16px_40px_-24px_rgba(15,23,42,0.45)] backdrop-blur">
+			<Card className="overflow-hidden rounded-xl border-slate-200 bg-white shadow-[0_8px_24px_-20px_rgba(15,23,42,0.35)] transition hover:border-slate-300 hover:shadow-[0_14px_28px_-20px_rgba(15,23,42,0.28)]">
 				<CardContent className="flex items-start gap-4 p-4 sm:items-center">
-					<div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-slate-100">
+					<div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-slate-200 bg-slate-50">
 						<Checkbox
 								id={`todo-${todo.id}`}
 								disabled={isUpdating || isDeleting}
@@ -70,11 +70,11 @@ const TodoCard = ({todo, toggleTodo, updateTodoTitle, handleDeleteTodo}: TodoCar
 					</div>
 
 					<label htmlFor={`todo-${todo.id}`} className="min-w-0 flex-1 cursor-pointer">
-						<div className="flex items-center gap-2 text-xs font-medium uppercase tracking-[0.18em] text-slate-400">
+						<div className="flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.14em] text-slate-400">
 							<span>Task #{todo.id}</span>
-							{todo.completed && <span className="rounded-full bg-emerald-100 px-2 py-1 text-[10px] tracking-[0.12em] text-emerald-700">Done</span>}
+							{todo.completed && <span className="rounded-md border border-emerald-200 bg-emerald-50 px-2 py-1 text-[10px] tracking-[0.08em] text-emerald-700">Done</span>}
 						</div>
-						<p className={`mt-2 text-base font-medium text-slate-900 transition-opacity ${isUpdating ? "opacity-50" : ""} ${todo.completed ? "line-through decoration-2 text-slate-400" : ""}`}>
+						<p className={`mt-2 text-[15px] font-medium leading-6 text-slate-900 transition-opacity ${isUpdating ? "opacity-50" : ""} ${todo.completed ? "line-through decoration-2 text-slate-400" : ""}`}>
 							{todo.title}
 						</p>
 					</label>
@@ -82,7 +82,7 @@ const TodoCard = ({todo, toggleTodo, updateTodoTitle, handleDeleteTodo}: TodoCar
 					<div className="flex shrink-0 items-center gap-2">
 						<Tooltip>
 							<TooltipTrigger asChild>
-								<Button variant="outline" size="icon" onClick={() => void handleToggleEditTitle(true)} disabled={isDeleting} className="size-10 rounded-xl border-slate-200 bg-white">
+								<Button variant="outline" size="icon" onClick={() => void handleToggleEditTitle(true)} disabled={isDeleting} className="size-9 rounded-lg border-slate-200 bg-white shadow-none">
 									<PencilLine className="size-4"/>
 								</Button>
 							</TooltipTrigger>
@@ -90,7 +90,7 @@ const TodoCard = ({todo, toggleTodo, updateTodoTitle, handleDeleteTodo}: TodoCar
 						</Tooltip>
 						<Tooltip>
 							<TooltipTrigger asChild>
-								<Button variant="outline" size="icon" onClick={() => void deleteTodo()} disabled={isDeleting || isUpdating} className="size-10 rounded-xl border-red-200 bg-red-50 text-red-600 hover:bg-red-100 hover:text-red-700">
+								<Button variant="outline" size="icon" onClick={() => void deleteTodo()} disabled={isDeleting || isUpdating} className="size-9 rounded-lg border-slate-200 bg-white text-slate-500 hover:border-red-200 hover:bg-red-50 hover:text-red-700">
 									<Trash2 className="size-4"/>
 								</Button>
 							</TooltipTrigger>

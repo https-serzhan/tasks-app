@@ -24,18 +24,18 @@ const CreateTodo = ({onCreateTodo}: CreateTodoProps) => {
 
 	return (
 			<div className="space-y-3">
-				<form className="flex flex-col gap-3 sm:flex-row" onSubmit={handleSubmit}>
+				<form className="flex flex-col gap-3 lg:flex-row" onSubmit={handleSubmit}>
 					<Input
 							disabled={isPending}
 							placeholder="Что нужно сделать?"
 							value={title}
 							onChange={(e) => setTitle(e.target.value)}
-							className="h-11 border-white/70 bg-white/90 shadow-sm"
+							className="h-11 rounded-lg border-slate-200 bg-white shadow-none"
 					/>
 					<Button
 							type='submit'
 							disabled={isPending || !title.trim()}
-							className="h-11 min-w-40 bg-slate-950 text-white hover:bg-slate-800"
+							className="h-11 min-w-36 rounded-lg bg-slate-900 text-white hover:bg-slate-800"
 					>
 						<Plus className="mr-2 size-4"/>
 						{isPending ? "Добавление..." : "Добавить"}
@@ -43,7 +43,7 @@ const CreateTodo = ({onCreateTodo}: CreateTodoProps) => {
 				</form>
 
 				{isPending && (
-						<Skeleton className="h-16 rounded-xl bg-white/70"/>
+						<Skeleton className="h-14 rounded-lg bg-slate-200/70"/>
 				)}
 			</div>
 	);
