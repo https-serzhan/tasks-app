@@ -6,7 +6,7 @@ import CreateTodo from "../components/create-todo.tsx";
 import TodoCard from "../components/todo-card.tsx";
 import {createTodo} from "../utils/api/requests/create-todo.ts";
 import {deleteTodo} from "../utils/api/requests/delete-todo.ts";
-import {CheckCheck, CircleDashed, ListFilter, ListTodo} from "lucide-react";
+import {CheckCheck, CircleDashed, ListTodo} from "lucide-react";
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card.tsx";
 import {
 	Pagination,
@@ -36,14 +36,14 @@ const TodoPage = () => {
 	});
 	const {page, limit, total} = qParams;
 
-	const handlePageChange = (page: number) => {
+	const handlePageChange = (nextPage: number) => {
 		setIsPendingTodos(true);
-		setQParams(prev => ({...prev, page}))
+		setQParams(prev => ({...prev, page: nextPage}))
 	}
 
-	const handleLimitChange = (limit: number) => {
+	const handleLimitChange = (nextLimit: number) => {
 		setIsPendingTodos(true);
-		setQParams(prev => ({...prev, limit, page: 1}))
+		setQParams(prev => ({...prev, limit: nextLimit, page: 1}))
 	}
 
 	const toggleTodo = async (id: number, completed: boolean) => {
@@ -91,77 +91,73 @@ const TodoPage = () => {
 	});
 
 	return (
-			<div className="mx-auto flex w-full max-w-6xl flex-col gap-6 px-4 py-6 sm:px-6 lg:px-8">
-				<section className="grid gap-4 xl:grid-cols-[280px_minmax(0,1fr)]">
-					<div className="space-y-4">
-						<Card className="rounded-2xl border-slate-200 bg-slate-900 text-white shadow-[0_18px_40px_-28px_rgba(15,23,42,0.55)]">
-							<CardContent className="flex flex-col gap-5 p-6">
-								<div className="flex items-center gap-3 text-sm font-medium text-slate-300">
-									<div className="rounded-lg bg-white/10 p-2 text-white">
-										<ListTodo className="size-4"/>
-									</div>
-									<span>Task board</span>
-								</div>
-								<div className="space-y-2">
-									<h1 className="text-2xl font-semibold tracking-tight text-white">Todo list</h1>
-									<p className="text-sm leading-6 text-slate-300">
-										Минималистичный рабочий список без лишнего декора.
-									</p>
-								</div>
-							</CardContent>
-						</Card>
-
-						<div className="grid gap-3 sm:grid-cols-3 xl:grid-cols-1">
-							<Card className="rounded-xl border-slate-200 bg-white shadow-none">
-								<CardContent className="flex items-center justify-between p-4">
-									<div>
-										<p className="text-xs font-medium uppercase tracking-[0.14em] text-slate-400">Всего</p>
-										<p className="mt-2 text-3xl font-semibold text-slate-950">{todos.length}</p>
-									</div>
-									<div className="rounded-lg border border-slate-200 bg-slate-50 p-2.5">
-										<ListTodo className="size-4 text-slate-700"/>
-									</div>
-								</CardContent>
-							</Card>
-							<Card className="rounded-xl border-slate-200 bg-white shadow-none">
-								<CardContent className="flex items-center justify-between p-4">
-									<div>
-										<p className="text-xs font-medium uppercase tracking-[0.14em] text-slate-400">В работе</p>
-										<p className="mt-2 text-3xl font-semibold text-amber-600">{pendingCount}</p>
-									</div>
-									<div className="rounded-lg border border-amber-200 bg-amber-50 p-2.5">
-										<CircleDashed className="size-4 text-amber-700"/>
-									</div>
-								</CardContent>
-							</Card>
-							<Card className="rounded-xl border-slate-200 bg-white shadow-none">
-								<CardContent className="flex items-center justify-between p-4">
-									<div>
-										<p className="text-xs font-medium uppercase tracking-[0.14em] text-slate-400">Закрыто</p>
-										<p className="mt-2 text-3xl font-semibold text-emerald-600">{completedCount}</p>
-									</div>
-									<div className="rounded-lg border border-emerald-200 bg-emerald-50 p-2.5">
-										<CheckCheck className="size-4 text-emerald-700"/>
-									</div>
-								</CardContent>
-							</Card>
-						</div>
-					</div>
-
+			<div className="mx-auto flex w-full max-w-6xl flex-col gap-5 px-4 py-6 sm:px-6 lg:px-8">
+				<section className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_320px]">
 					<Card className="rounded-2xl border-slate-200 bg-white shadow-[0_18px_36px_-28px_rgba(15,23,42,0.22)]">
-						<CardContent className="p-5 sm:p-6">
-							<div className="mb-5 flex items-start justify-between gap-4 border-b border-slate-200 pb-5">
-								<div className="flex items-center gap-3 text-sm font-medium text-slate-500">
-									<div className="rounded-lg border border-slate-200 bg-slate-50 p-2 text-slate-700">
-										<ListFilter className="size-4"/>
-									</div>
+						<CardContent className="p-6 sm:p-7">
+							<div className="flex flex-col gap-6">
+								<div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
 									<div>
-										<p className="text-base font-semibold text-slate-950">Управление задачами</p>
-										<p className="mt-1 text-sm text-slate-500">Добавление, редактирование и смена статуса.</p>
+										<div className="mb-3 inline-flex items-center rounded-md border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-medium uppercase tracking-[0.16em] text-slate-500">
+											Task board
+										</div>
+										<h1 className="text-3xl font-semibold tracking-tight text-slate-950">Todo list</h1>
+										<p className="mt-2 max-w-2xl text-sm leading-6 text-slate-600">
+											Компактный рабочий экран для создания, редактирования и завершения задач.
+										</p>
 									</div>
+
+									<div className="grid gap-3 sm:grid-cols-3">
+										<div className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3">
+											<div className="flex items-center justify-between">
+												<span className="text-xs font-medium uppercase tracking-[0.14em] text-slate-400">Всего</span>
+												<ListTodo className="size-4 text-slate-500"/>
+											</div>
+											<p className="mt-3 text-3xl font-semibold text-slate-950">{todos.length}</p>
+										</div>
+										<div className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3">
+											<div className="flex items-center justify-between">
+												<span className="text-xs font-medium uppercase tracking-[0.14em] text-amber-700/70">В работе</span>
+												<CircleDashed className="size-4 text-amber-600"/>
+											</div>
+											<p className="mt-3 text-3xl font-semibold text-amber-700">{pendingCount}</p>
+										</div>
+										<div className="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3">
+											<div className="flex items-center justify-between">
+												<span className="text-xs font-medium uppercase tracking-[0.14em] text-emerald-700/70">Готово</span>
+												<CheckCheck className="size-4 text-emerald-600"/>
+											</div>
+											<p className="mt-3 text-3xl font-semibold text-emerald-700">{completedCount}</p>
+										</div>
+									</div>
+								</div>
+
+								<div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+									<CreateTodo onCreateTodo={handleCreateTodo}/>
 								</div>
 							</div>
-							<CreateTodo onCreateTodo={handleCreateTodo}/>
+						</CardContent>
+					</Card>
+
+					<Card className="rounded-2xl border-slate-200 bg-slate-900 text-white shadow-[0_18px_36px_-28px_rgba(15,23,42,0.35)]">
+						<CardContent className="p-6">
+							<p className="text-sm font-medium text-slate-300">Navigation</p>
+							<div className="mt-6 space-y-4">
+								<div>
+									<p className="text-4xl font-semibold text-white">{page}</p>
+									<p className="mt-1 text-sm text-slate-300">Текущая страница</p>
+								</div>
+								<div className="h-px bg-white/10"/>
+								<div>
+									<p className="text-4xl font-semibold text-white">{totalPages}</p>
+									<p className="mt-1 text-sm text-slate-300">Всего страниц</p>
+								</div>
+								<div className="h-px bg-white/10"/>
+								<div>
+									<p className="text-4xl font-semibold text-white">{limit}</p>
+									<p className="mt-1 text-sm text-slate-300">Задач на страницу</p>
+								</div>
+							</div>
 						</CardContent>
 					</Card>
 				</section>
@@ -169,18 +165,18 @@ const TodoPage = () => {
 				<Card className="rounded-2xl border-slate-200 bg-white shadow-[0_18px_36px_-28px_rgba(15,23,42,0.22)]">
 					<CardHeader className="flex flex-col gap-4 border-b border-slate-200 pb-4 sm:flex-row sm:items-center sm:justify-between">
 						<div>
-							<CardTitle className="text-lg">Список задач</CardTitle>
+							<CardTitle className="text-xl">Список задач</CardTitle>
 							<p className="mt-1 text-sm text-slate-500">Страница {page} из {totalPages}</p>
 						</div>
 						<div className="flex items-center gap-3">
 							<span className="text-sm text-slate-500">Показывать</span>
 							<Select value={String(limit)} onValueChange={(value) => handleLimitChange(Number(value))}>
-								<SelectTrigger className="h-9 w-24 rounded-lg border-slate-200 bg-white shadow-none">
+								<SelectTrigger className="h-10 w-24 rounded-lg border-slate-200 bg-white shadow-none">
 									<SelectValue placeholder="Лимит"/>
 								</SelectTrigger>
 								<SelectContent>
-									{[5, 10, 25, 50].map((limit) => (
-										<SelectItem key={limit} value={String(limit)}>{limit}</SelectItem>
+									{[5, 10, 25, 50].map((itemLimit) => (
+										<SelectItem key={itemLimit} value={String(itemLimit)}>{itemLimit}</SelectItem>
 									))}
 								</SelectContent>
 							</Select>
@@ -203,6 +199,7 @@ const TodoPage = () => {
 										/>
 								))
 						)}
+
 						<Pagination className="justify-between border-t border-slate-200 pt-4">
 							<PaginationContent>
 								<PaginationItem>
